@@ -1,0 +1,250 @@
+# Single-Cylinder Reciprocating Engine Mechanism — Design & Build Plan
+**SolidWorks Portfolio Project**
+
+This is a mechanism-only build (no combustion, no valvetrain) sized like a small model/demo engine — chosen so every part is easy to machine-reference, easy to dimension defensibly, and easy to animate. All dimensions below are internally consistent (bore/stroke/rod ratio checked) and are a good *starting point* — treat them as a baseline you can justify in your README, not a spec pulled from a real engine.
+
+**Baseline geometry**
+- Bore (cylinder ID) = 40 mm
+- Stroke = 45 mm → crank throw (crank radius) = 22.5 mm
+- Connecting rod length (center-to-center) = 90 mm → L/R ratio = 90/22.5 = 4.0 (good, avoids excessive piston side-thrust; real engines run 3–4.5)
+
+---
+
+## 1. Part List with Dimensions
+
+### 1.1 Piston
+| Feature | Dimension |
+|---|---|
+| Outer diameter (skirt OD) | Ø39.9 mm (0.1 mm running clearance in 40 mm bore) |
+| Overall height | 35 mm |
+| Piston pin (wrist pin) bore diameter | Ø10 mm H7 |
+| Pin bore location from piston crown | 20 mm (roughly mid-skirt, adjust so pin bore doesn't intersect ring grooves) |
+| Pin boss wall thickness | 4 mm each side |
+| Ring groove width (if modeling rings) | 1.5 mm |
+| Ring groove depth | 2 mm |
+| Number of ring grooves | 2 compression + 1 oil (optional: model 1 compression ring only for portfolio purposes) |
+| Crown thickness (top land to pin bore centerline) | 20 mm |
+| Skirt wall thickness | 2.5 mm |
+| Material (for FEA/BOM) | Al 4032 or A356 cast aluminum (typical real-world piston alloy) |
+
+### 1.2 Connecting Rod
+| Feature | Dimension |
+|---|---|
+| Center-to-center length | 90 mm |
+| Small end bore (piston pin bushing) | Ø10 mm H7 |
+| Small end OD | Ø18 mm |
+| Small end width (along pin axis) | 12 mm |
+| Big end bore (crank pin) | Ø20 mm H7 |
+| Big end OD (cap + rod combined) | Ø32 mm |
+| Big end width (along crank pin axis) | 16 mm |
+| I-beam shank — web thickness | 4 mm |
+| I-beam shank — flange width | 10 mm |
+| I-beam shank — overall cross-section height | 8 mm |
+| Rod cap split | Straight split, perpendicular to rod centerline (simplest — angled/serrated splits are a nice-to-have upgrade) |
+| Cap bolt hole diameter | Ø4.2 mm (clearance for M4 bolt), 2 places |
+| Cap bolt spacing (center to center) | 22 mm (straddling big end bore) |
+| Material | Forged steel (4340) or Al 7075 for a lightweight rod — pick one and justify it in the README |
+
+### 1.3 Crankshaft
+Model as a single-throw crank (no need for multiple mains unless you want a longer flywheel shaft to show off).
+
+| Feature | Dimension |
+|---|---|
+| Main journal diameter | Ø20 mm |
+| Main journal length (each side) | 25 mm |
+| Crank pin diameter | Ø20 mm H7 |
+| Crank pin length | 18 mm (slightly > rod big-end width of 16 mm for clearance) |
+| Crank throw / radius | 22.5 mm (center of main journal to center of crank pin) |
+| Crank web thickness | 8 mm each web (2 webs) |
+| Counterweight — shape | Partial-disc / "pie slice" opposite the crank pin |
+| Counterweight — radius | 30 mm |
+| Counterweight — thickness | 8 mm (same as web) |
+| Overall crankshaft length (main-to-main, outer faces) | 76 mm |
+| Keyway (for flywheel/motor coupling, one end) | 3 mm wide × 1.8 mm deep, 10 mm long |
+| Material | Forged/machined steel (4140) |
+
+> Counterweight sizing note: for a portfolio piece, size the counterweight so its mass-radius product roughly balances the reciprocating mass at the crank pin location — you don't need a full dynamic balance calc, but mention in the README that you sized it to offset ~50–100% of the rotating mass (rod big end + crank pin share), which is standard single-cylinder practice.
+
+### 1.4 Cylinder Liner / Block (minimal — just enough to house the piston)
+| Feature | Dimension |
+|---|---|
+| Bore (ID) | Ø40 mm H7 |
+| Liner wall thickness | 4 mm |
+| Liner OD | Ø48 mm |
+| Liner length | 70 mm (allows full 45 mm stroke + piston height + clearance at TDC/BDC) |
+| Top deck (closed end, optional) | 6 mm thick, or leave open if you just want a sleeve to show reciprocation |
+| Mounting flange (optional, for realism) | Ø60 mm, 5 mm thick, 4× Ø6 mm bolt holes on a 54 mm bolt circle |
+| Crankcase mounting face at bottom | Flat face, 4× Ø6 mm through holes matching a simple base plate |
+| Material | Cast iron (real-world) or Al with a "liner" callout in your notes |
+
+### 1.5 Piston Rings (optional, visual detail)
+| Feature | Dimension |
+|---|---|
+| Ring OD (free/relaxed) | Ø40.6 mm (slightly oversized — rings compress into the bore) |
+| Ring ID | Ø37 mm |
+| Ring cross-section (radial × axial) | 1.5 mm × 1.5 mm |
+| Ring gap (end gap, as a small cosmetic notch) | 0.4 mm |
+| Quantity | 2 (top and second compression ring) |
+
+Model these as simple revolved rings with a small cut for the end gap — pure visual/detail geometry, not functional in the motion study.
+
+### 1.6 Gudgeon Pin / Wrist Pin
+| Feature | Dimension |
+|---|---|
+| OD | Ø10 mm g6 (slip fit in piston bosses and rod small end bushing) |
+| Length | 32 mm (spans both piston bosses + rod small end) |
+| Wall thickness (if hollow, for weight reduction realism) | 2 mm (ID Ø6 mm) |
+| Chamfer both ends | 0.5 × 45° |
+| Retention | C-clip grooves at each end, 1 mm wide × 0.5 mm deep, 1 mm in from each face (nice detail touch, doesn't need to be functional in the mechanism) |
+| Material | Case-hardened steel |
+
+### 1.7 Fasteners (Rod Cap Bolts)
+- 2× **M4 × 0.7, length ~18–20 mm**, socket head cap screw — pull straight from the SolidWorks Toolbox (Fasteners > Hex Head / Socket Head > Socket Head Cap Screw), configured to your cap hole spacing (22 mm) and cap+rod combined thickness.
+- Optionally add 2× M4 flat washers from Toolbox for realism.
+- If you want to show a base-plate-to-liner joint too: 4× M6 × 20 mm SHCS from Toolbox.
+
+---
+
+## 2. Modeling Sequence (SolidWorks)
+
+General principle: **build every rotating/reciprocating part on a shared, predictable set of reference planes and axes** so your mates in the assembly are unambiguous later. Establish a global convention now: **Front Plane = the plane containing the cylinder axis and crank axis** (i.e., the plane the piston reciprocates in), **Y-axis = cylinder axis / piston travel direction**.
+
+### 2.1 Piston
+1. New part, sketch on **Top Plane** (or Front, pick one and stay consistent): circle Ø39.9 mm → **Extrude** to 35 mm (this is your skirt/crown blank).
+2. On the **Front Plane**, sketch the wrist pin bore centerline as a construction line 20 mm down from the top face; **Extruded Cut** Ø10 mm through both sides (creates the pin bore through the bosses).
+3. Add pin **bosses**: sketch two rectangles/circles on the outside of the skirt at the pin bore location if you want raised boss pads, **Extrude Boss** ~2 mm proud of the skirt if desired (optional realism detail).
+4. Cut **ring grooves**: sketch a rectangle profile on a plane through the cylinder axis near the top of the piston, use **Revolved Cut** around the piston's central axis — repeat for each groove.
+5. **Fillet** the crown edge (top edge of piston) — small fillet, ~0.5 mm, for realism and stress relief.
+6. **Chamfer** the skirt bottom edge, 1 × 45°, to ease assembly into the liner.
+7. Add a **cosmetic thread or oil hole detail** if you want extra polish (optional).
+8. **GD&T**: apply a **cylindricity** callout to the skirt OD (this is the classic GD&T control for a piston — it controls the true cylindrical form better than a simple diameter tolerance would), and a **concentricity** (or position, referenced to a datum axis through the skirt) callout on the pin bore relative to the skirt's own axis (Datum A = skirt OD axis).
+
+### 2.2 Connecting Rod
+1. Sketch the rod's **center-to-center layout** first on the Front Plane: two circles (Ø18 small end, Ø32 big end) 90 mm apart, connected by the I-beam shank profile lines. This sketch is your "skeleton" — keep it as a separate reference sketch you can hide later.
+2. **Extrude** the small end and big end bosses as circular extrudes (12 mm and 16 mm wide respectively) from a sketch on the Front Plane.
+3. Model the **I-beam shank**: create a sketch on a plane perpendicular to the rod's long axis (use a **reference plane** normal to the centerline sketch at the shank's midpoint), draw the I-beam cross-section (two flanges + web), then use **Swept Boss/Base** along the centerline sketch (the straight line between small and big end centers) to generate the tapering shank in one continuous sweep. Alternatively, use **Loft** between a small-end-adjacent profile and a big-end-adjacent profile if you want a smoothly tapering I-beam.
+4. **Bore the small end and big end**: Extruded Cut Ø10 mm through the small end, Ø20 mm through the big end.
+5. Split the big end into **rod + cap**: sketch a split line through the big end bore centerline, use **Split feature** (Insert > Features > Split) to separate the part into two bodies, then save the cap as its own part (Insert > Features > Save Bodies, or just remodel the cap as a separate simple part mating to the same bore — many portfolio builds just model the cap as a standalone part with the same big-end radius for simplicity).
+6. Add **bolt holes** through the cap and into the rod: Ø4.2 mm clearance holes on the cap, and Ø3.3 mm tapped-hole call outs (or clearance if you're using nuts) on the rod side, 22 mm apart, symmetric about the big end axis. Use a **linear pattern or mirror** about the bore centerline plane to keep them symmetric.
+7. **Fillet** all internal corners of the I-beam (stress concentration relief — good talking point for your FEA).
+8. **GD&T**: 
+   - **Position tolerance** on the two cap bolt holes, referenced to Datum A (big end bore axis) and Datum B (rod's long-axis plane) — this is a textbook position callout.
+   - **Concentricity** (or **position** referenced to a datum axis) between small end and big end bores — critical because misalignment here creates bending in the pin, exactly the kind of thing a reviewer will expect you to know to control.
+   - **Parallelism** between the small end and big end bore axes (rod "twist" control) — a nice bonus callout.
+
+### 2.3 Crankshaft
+1. Sketch the **main journal** as a circle Ø20 mm on the Front Plane, **Extrude** 25 mm — this is main journal #1.
+2. On a plane offset from the end of main journal #1 (offset = web thickness, 8 mm), sketch the crank **web** as a rounded rectangle/ellipse profile sized to reach from the main journal's center out past the crank pin's center, **Extrude** 8 mm.
+3. On a plane offset again (through the web), sketch the **crank pin** circle Ø20 mm — note this circle is **not concentric with the main journal**, it's offset by 22.5 mm (the crank throw). Best practice: use a **construction sketch on the end face** with two centerpoints 22.5 mm apart (main axis and pin axis) so every subsequent feature references that one dimension — if you change stroke later, you only edit one sketch.
+4. **Extrude** the crank pin 18 mm from the web.
+5. Repeat the **web** extrude on the far side of the crank pin (second web, 8 mm), then a second **main journal** extrude (25 mm, back on the original main axis).
+6. Add the **counterweight**: sketch on the same offset plane as a web, but shaped as a partial disc/pie-slice extending radially in the direction opposite the crank pin (180° from the pin's offset direction). **Extrude** 8 mm, merged with the web body.
+7. Cut the **keyway**: sketch a rectangle 3 mm × 1.8 mm on one main journal's end face, **Extruded Cut** 10 mm deep into the journal.
+8. **Fillet** every step/shoulder where journal meets web and web meets pin (real crankshafts live or die on fillet radii — this is a great FEA/stress talking point). Use ~1–2 mm fillets minimum.
+9. **GD&T**:
+   - **Concentricity** (or runout) between the two main journals, both referenced to a common Datum axis — this is the single most important GD&T callout on a crankshaft in real practice.
+   - **Position** tolerance on the crank pin axis relative to the main journal datum axis (controls the stroke accuracy).
+   - **Total runout** on the main journals is a nice advanced callout if you want to show you know the difference between runout and concentricity.
+
+### 2.4 Cylinder Liner
+1. Sketch a circle Ø48 mm (OD) on the Front Plane, **Extrude** 70 mm.
+2. **Extruded Cut**, Ø40 mm bore, through the full length (or to a depth just short of a closed top deck, if you're modeling one end closed).
+3. If modeling a mounting flange: sketch on one end face, **Extrude Boss** the flange ring, then **Extruded Cut** the 4× bolt holes using a **circular pattern** on the bolt circle.
+4. **Chamfer** the bore's top edge (piston entry) to ease assembly, 1 × 45°.
+5. **GD&T**: **cylindricity** on the bore ID (pairs conceptually with the piston's cylindricity callout — you're controlling the mating cylindrical interface from both sides, which is a strong thing to point out in your README), and **perpendicularity** of the bore axis to the base/mounting face.
+
+### 2.5 Piston Rings
+1. Sketch a circle pair (OD 40.6 mm, ID 37 mm) on a plane, **Revolve** 360° minus a small gap (or revolve 358° and leave the end gap as an open feature) around the ring's own centerline.
+2. Alternatively: full revolve, then a single **Extruded Cut** slot for the end gap.
+
+### 2.6 Gudgeon Pin
+1. Sketch a circle Ø10 mm, **Extrude** 32 mm (or **Revolve** if you want to add the hollow bore in the same sketch).
+2. If hollow, sketch the Ø6 mm ID as a second circle in the same **Extrude** operation (extrude the annulus directly), or do a separate **Extruded Cut** afterward.
+3. **Chamfer** both ends 0.5 × 45°.
+4. Cut the **C-clip grooves**: sketch a thin rectangle profile near each end, **Revolved Cut** 360° around the pin axis.
+
+---
+
+## 3. Assembly and Mates
+
+Bring parts in, in this order, and fix the **cylinder liner** first (Insert Component, then right-click → Fix, or mate it to the assembly origin) — everything else references off it.
+
+### 3.1 Piston to Cylinder
+- **Concentric mate**: piston skirt OD cylindrical face ↔ cylinder bore cylindrical face.
+- **Limit distance mate** (Advanced Mate → Distance, with min/max limits) OR simply leave it unconstrained along the bore axis except for the concentric mate — the **wrist pin/rod/crank chain** is what will actually define piston position once the driver mate is running, so you don't need a hard travel-limit mate for the mechanism to work. (Optional: add a **coincident/width mate** between the piston crown and a reference plane only if you want a manual "set TDC position" step before you attach the rod — many builders do this once during initial assembly, then suppress it once the rod/crank chain is fully mated.)
+
+### 3.2 Piston to Connecting Rod (via wrist pin)
+- Insert the **wrist pin** and mate it: **Concentric** (pin OD ↔ piston pin bore) and **Concentric** (pin OD ↔ rod small end bore) — since the pin bore and small-end bore share the same axis once both concentric mates are applied, this alone aligns piston and rod on the pin axis.
+- **Width mate** (or two coincident mates on the pin bosses' inner faces vs. the rod small end's side faces) to center the rod between the piston's pin bosses axially.
+- Leave **rotation free** about the pin axis — do NOT add a coincident/parallel mate between piston and rod faces; the rod must be free to swing relative to the piston as the crank rotates. This rotational DOF is what allows the rod angularity through the stroke.
+
+### 3.3 Connecting Rod to Crankshaft (via crank pin)
+- **Concentric mate**: rod big end bore ↔ crankshaft crank pin OD.
+- **Width/coincident mate** to center the rod (and cap) axially on the crank pin.
+- Again, leave **rotation free** about the crank pin axis — this is the second rotating joint in the four-bar-equivalent slider-crank chain.
+
+### 3.4 Crankshaft to Fixed Reference
+- **Concentric mate**: main journal OD ↔ a fixed bearing bore (either model a simple bearing/bracket part, or mate directly to a hole in your base plate/crankcase stand-in).
+- **Coincident/width mate** to locate the crankshaft axially against the bearing/bracket face.
+- This joint needs **full rotational freedom** about the main journal axis — this is your **driver** joint.
+
+### 3.5 The Driver Mate
+Make the **crankshaft-to-fixed-reference concentric mate** the driver. In practice:
+- In the **Motion Study**, you don't "flag" a mate as driver by right-clicking it in the mate list — instead, you add a **Rotary Motor** (see Section 4) whose reference is the crankshaft's main journal cylindrical face or a rotation axis through it. That motor becomes the single input that drives the whole chain: crank rotation → crank pin position → rod big-end position → rod small-end position → piston position along the bore.
+- Do **not** put a motor or motion driver on the piston or the rod — only the crankshaft. Everything else's motion is a *result*, not an input; that's the entire point of demonstrating a slider-crank mechanism correctly.
+- Sanity check before animating: with all mates applied and nothing over-defined (assembly should show 0 DOF remaining error, or exactly the intended free rotations at the two pin joints and the crank main journal — SolidWorks will report the assembly as fully mated with rotational freedom at those three joints, which is correct and expected for a mechanism, not an error).
+
+---
+
+## 4. Motion Study Setup (Motion Study, not Motion Analysis)
+
+1. Open the **Motion Study** tab at the bottom of the SolidWorks window (if not visible: right-click any tab → enable "Motion Study").
+2. In the **Motion Study Type** dropdown at the top of the MotionManager, set it to **Motion Analysis** if you want physically-accurate results, or leave the default **Animation**/"Basic Motion" mode if you just want a kinematic playback — for a simple constant-RPM slider-crank with no dynamics/loads, **Basic Motion** mode already correctly captures the geometry-driven piston reciprocation from your mates, which is enough for your GIF.
+3. Click the **Motor** icon in the MotionManager toolbar → choose **Rotary Motor**.
+4. For **Motor Location**, select the crankshaft's main journal cylindrical face (or an axis through it) as the component/direction reference.
+5. Set **Motor Type** to **Constant Speed**, enter your desired RPM (e.g., 60 RPM for a slow, clearly-readable animation, or up to a few hundred RPM if you want a snappier clip — 60–120 RPM reads clearly on a GIF).
+6. Set the **Motion Study duration** in the timeline (drag the end-of-timeline key at the bottom) to at least one full crank revolution's worth of time at your chosen RPM (e.g., at 60 RPM, one revolution = 1 second, so set the timeline to 1–2 seconds for one or two full cycles).
+7. Click **Calculate** (the "play/calculate" button in the MotionManager toolbar) to compute the motion — SolidWorks will step through and solve the mates frame by frame.
+8. **Playback**: use the play button to preview; confirm the piston moves smoothly from TDC to BDC and back with no snapping, jumping, or interference (if it snaps, check for an over-constrained mate or a missed concentric mate).
+9. **Export**: File → Save Animation (or the "Save Animation" icon in the MotionManager toolbar) → choose **.avi** or **.gif** as the output format, set resolution (e.g., 800×600 or 1080×1080 for a clean GitHub-embeddable square/rect GIF), set frame rate (15–30 fps is plenty for a mechanism GIF), and render.
+10. If exporting AVI, convert to GIF afterward with a tool like ffmpeg (`ffmpeg -i motion.avi -vf "fps=15,scale=600:-1" motion.gif`) to keep file size GitHub-friendly (GIFs embedded in READMEs should ideally stay under ~10 MB).
+
+---
+
+## 5. Drawings
+
+For a portfolio, don't drawing-out every single part — pick the parts that best showcase GD&T and manufacturing intent. Recommended set:
+
+| Part | Views | Why |
+|---|---|---|
+| **Piston** | Front (with ring grooves dimensioned), Section view through the pin bore axis, Isometric | Shows internal pin boss/ring groove geometry; good spot for the cylindricity + concentricity FCFs |
+| **Connecting Rod** | Front, Section through big end bore, Isometric, Detail view of the I-beam cross-section | The single best part to show off GD&T — position tolerances on cap bolts, concentricity between bores |
+| **Crankshaft** | Front (showing crank throw dimension clearly), Section through crank pin, Isometric | Shows the offset/throw geometry and lets you place concentricity/runout FCFs on the main journals |
+| **Cylinder Liner** | Front, Full Section (showing bore + wall thickness), Isometric | Simple part, but the section view sells the "liner" concept, and cylindricity + perpendicularity FCFs fit naturally |
+| **Assembly drawing** | Front section view at one crank angle (e.g., mid-stroke, to show all parts interacting), Isometric exploded view with a BOM balloon callout table | This is your "hero" drawing — the one a recruiter looks at first |
+
+Optional (skip if time-limited): gudgeon pin and piston ring drawings — low GD&T value, mostly redundant with the piston/rod drawings.
+
+For every detail drawing: include a **title block** with part name/number/material/revision, and place your FCFs referencing clearly labeled datums (Datum A, B, C) called out directly on the same view where the datum feature is visible.
+
+---
+
+## 6. Bonus: Quick FEA on the Connecting Rod
+
+Since you have ANSYS/FEA experience, a nice bonus for the README:
+- **Load case**: apply a compressive load at the small end bore (representing peak combustion/inertia force at TDC — even a placeholder value like 3000–5000 N is fine for a *mechanism demo*, just state clearly it's illustrative, not from a real cylinder pressure trace) with the big end bore fixed (or vice versa).
+- **Boundary conditions**: fix the big end bore's bottom half (cylindrical support), apply a bearing load to the small end bore.
+- **Report**: max von Mises stress location (should land in the I-beam shank or the fillet transitions — a great tie-back to the fillets you added in modeling), factor of safety against your chosen material's yield strength, and a screenshot of the deformed shape overlay.
+- Mention this is a simplified static case (no dynamic/inertial loading, no fatigue analysis) — being upfront about the analysis' scope reads as more credible than overselling it.
+
+---
+
+## Summary Table — Key Interfaces & Fits
+
+| Interface | Nominal | Fit type |
+|---|---|---|
+| Piston skirt OD ↔ Cylinder bore | Ø39.9 / Ø40 H7 | Running clearance |
+| Wrist pin OD ↔ Piston pin bore | Ø10 g6 / Ø10 H7 | Slip fit |
+| Wrist pin OD ↔ Rod small end bore | Ø10 g6 / Ø10 H7 | Slip fit (pin rotates in rod) |
+| Crank pin OD ↔ Rod big end bore | Ø20 H7 | Rotating (bearing) fit |
+| Main journal OD ↔ Bearing/bracket bore | Ø20 H7 | Rotating (bearing) fit |
